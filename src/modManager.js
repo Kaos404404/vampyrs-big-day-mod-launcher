@@ -50,7 +50,7 @@ class ModManager {
     const commonPaths = [
       path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'steamapps', 'common', 'Vampys Big Day'),
       path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'steamapps', 'common', "Vampy's Big Day"),
-      'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Vampys Big Day',
+      'C:\\ Program Files (x86)\\Steam\\steamapps\\common\\Vampys Big Day',
       'C:\\ Program Files\\Steam\\steamapps\\common\\Vampys Big Day',
       path.join(os.homedir(), 'Games', "Vampy's Big Day"),
       path.join(os.homedir(), 'Games', 'Vampys Big Day'),

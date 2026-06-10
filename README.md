@@ -1,6 +1,23 @@
-# 🧛 Vampy's Big Day - Mod Launcher
+# 🧛 Vampy's Big Day - Mod Launcher v2.0
 
 Ein moderner Mod Launcher für das Spiel "Vampy's Big Day" (entwickelt in Construct 3).
+
+## ✨ Neue Features v2.0
+
+🔍 **Auto-Detect Funktion**
+- Findet das Spiel automatisch auf deinem Computer
+- Unterstützt Steam Registry Locations
+- Prüft mehrere gängige Installationsorte
+
+📦 **Optimierte Mod-Verwaltung**
+- Schnellere Mod-Installation
+- Bessere Fehlerbehandlung
+- Status-Indikatoren
+
+🔨 **EXE-Build Support**
+- Automatisches Packaging als .exe Datei
+- Installer + Portable Version
+- Desktop- und Startmenü-Verknackelung
 
 ## Features
 
@@ -14,19 +31,27 @@ Ein moderner Mod Launcher für das Spiel "Vampy's Big Day" (entwickelt in Constr
 - 🚀 Starten Sie das Spiel mit aktivierten Mods
 - 📂 Automatische Mod-Verwaltung
 - 🔧 Einfache Spielpfad-Konfiguration
+- 🔍 Automatische Spielerkennung
 
 🎨 **Benutzeroberfläche**
 - Modernes, dunkles Design
 - Intuitive Bedienung
 - Responsive Layout
+- Status-Anzeige (Online/Offline)
 
 ## Installation
 
-### Voraussetzungen
+### Option 1: Als EXE Datei (Empfohlen)
+
+1. Lade die neueste `.exe` aus den [Releases](https://github.com/Kaos404404/vampyrs-big-day-mod-launcher/releases) herunter
+2. Führe die Datei aus
+3. Folge dem Installationsassistenten
+
+### Option 2: Aus Quelle
+
+**Voraussetzungen:**
 - Node.js (v14 oder höher)
 - npm oder yarn
-
-### Setup
 
 ```bash
 # Repository klonen
@@ -45,8 +70,9 @@ npm start
 ### Erstes Mal
 
 1. Starten Sie den Launcher
-2. Klicken Sie auf "Spielpfad wählen" und navigieren Sie zum Vampy's Big Day Verzeichnis
-3. Klicken Sie auf "Mod installieren" und wählen Sie eine `.zip` Datei mit einer Mod
+2. Klicken Sie auf "Auto-Detect" - der Launcher versucht das Spiel automatisch zu finden
+3. Falls nicht gefunden, klicken Sie auf "Spielpfad wählen" und navigieren Sie zum Verzeichnis
+4. Klicken Sie auf "Mod installieren" und wählen Sie eine `.zip` Datei mit einer Mod
 
 ### Mod installieren
 
@@ -79,18 +105,19 @@ Zip-Dateien sollten eine `mod.json` Datei enthalten:
 }
 ```
 
-## Build für Distribution
+## Build & Distribution
+
+### Build als EXE
 
 ```bash
-# Windows
+# Installer + Portable Version
 npm run build:win
 
-# macOS
-npm run build:mac
-
-# Linux
-npm run build:linux
+# Nur Portable Version
+npm run build:portable
 ```
+
+Die Dateien werden im `dist/` Verzeichnis erstellt.
 
 ## Ordner-Struktur
 
@@ -98,13 +125,13 @@ npm run build:linux
 vampyrs-big-day-mod-launcher/
 ├── main.js                 # Hauptprozess
 ├── preload.js             # IPC-Bridge
-├── package.json           # Abhängigkeiten
+├── package.json           # Abhängigkeiten & Build-Config
 ├── README.md              # Diese Datei
 └── src/
     ├── index.html         # UI
     ├── styles.css         # Styling
     ├── renderer.js        # Frontend-Logik
-    └── modManager.js      # Mod-Verwaltung
+    └── modManager.js      # Mod-Verwaltung + Auto-Detect
 ```
 
 ## Speicherort der Mods
@@ -119,3 +146,15 @@ MIT License - Frei verwendbar
 ## Support
 
 Bei Fragen oder Problemen öffne bitte ein Issue auf GitHub.
+
+## Changelog
+
+### v2.0.0
+- ✨ Auto-Detect-Funktion hinzugefügt
+- 📦 EXE-Build-Unterstützung
+- 🔏 Status-Indikatoren
+- 🔧 Verbesserte Fehlerbehandlung
+- 🏆 Performance-Optimierungen
+
+### v1.0.0
+- Initiale Veröffentlichung
