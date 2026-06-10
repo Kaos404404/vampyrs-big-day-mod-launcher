@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vampy's Big Day - Mod Launcher</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧛 Vampy's Big Day - Mod Launcher</h1>
+      <p>Installiere und starten Sie Mods für Ihr Spiel</p>
+    </header>
+
+    <div class="main-content">
+      <aside class="sidebar">
+        <div class="settings-section">
+          <h3>⚙️ Einstellungen</h3>
+          <button id="setGamePathBtn" class="btn btn-primary">Spielpfad wählen</button>
+          <div id="gamePathDisplay" class="path-display">Kein Pfad gesetzt</div>
+        </div>
+
+        <div class="mod-actions-section">
+          <h3>📦 Mod Management</h3>
+          <button id="installModBtn" class="btn btn-success">Mod installieren</button>
+          <button id="launchGameBtn" class="btn btn-danger">Spiel starten</button>
+        </div>
+      </aside>
+
+      <main class="mod-list-section">
+        <h2>Installierte Mods</h2>
+        <div id="modList" class="mod-list">
+          <p class="loading">Lädt Mods...</p>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

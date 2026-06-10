@@ -1,0 +1,24 @@
+{
+  "name": "vampyrs-big-day-mod-launcher",
+  "version": "1.0.0",
+  "description": "Mod Launcher for Vampy's Big Day (Construct 3 Game)",
+  "main": "main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.1.2",
+    "extract-zip": "^2.0.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "electron": "^latest",
+    "electron-builder": "^24.0.0"
+  }
+}

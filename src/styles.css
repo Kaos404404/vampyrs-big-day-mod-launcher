@@ -1,0 +1,270 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+  color: #e0e0e0;
+  overflow: hidden;
+}
+
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: linear-gradient(90deg, #d41159 0%, #a00d4a 100%);
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+  font-size: 2em;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+header p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9em;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 300px;
+  background: #252535;
+  padding: 20px;
+  border-right: 1px solid #3d3d4d;
+  overflow-y: auto;
+}
+
+.settings-section,
+.mod-actions-section {
+  margin-bottom: 30px;
+}
+
+.settings-section h3,
+.mod-actions-section h3 {
+  color: #d41159;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+}
+
+.path-display {
+  background: #1e1e2e;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  margin-top: 10px;
+  color: #888;
+  word-break: break-all;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: #4a90e2;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #357abd;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+}
+
+.btn-success {
+  background: #27ae60;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #1e8449;
+  box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+.btn-danger {
+  background: #d41159;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #a00d4a;
+  box-shadow: 0 2px 8px rgba(212, 17, 89, 0.3);
+}
+
+.btn-toggle {
+  background: #444;
+  color: white;
+  padding: 5px 10px;
+  margin-right: 5px;
+}
+
+.btn-toggle.enabled {
+  background: #27ae60;
+}
+
+.btn-toggle.disabled {
+  background: #c0392b;
+}
+
+.mod-list-section {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.mod-list-section h2 {
+  color: #d41159;
+  margin-bottom: 20px;
+  font-size: 1.5em;
+}
+
+.mod-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 15px;
+}
+
+.mod-card {
+  background: #2d2d44;
+  border: 1px solid #3d3d4d;
+  border-radius: 6px;
+  padding: 15px;
+  transition: all 0.3s ease;
+}
+
+.mod-card:hover {
+  border-color: #d41159;
+  box-shadow: 0 2px 12px rgba(212, 17, 89, 0.2);
+}
+
+.mod-card h3 {
+  color: #fff;
+  margin-bottom: 8px;
+  font-size: 1.1em;
+}
+
+.mod-card p {
+  color: #aaa;
+  font-size: 0.9em;
+  margin: 5px 0;
+}
+
+.mod-status {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 0.8em;
+  font-weight: 600;
+}
+
+.mod-status.enabled {
+  background: #27ae60;
+  color: white;
+}
+
+.mod-status.disabled {
+  background: #555;
+  color: #ccc;
+}
+
+.mod-actions {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.mod-actions .btn {
+  flex: 1;
+  margin-bottom: 5px;
+  font-size: 0.85em;
+  padding: 8px 10px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.empty-state p {
+  font-size: 1.1em;
+}
+
+.loading {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+}
+
+.success-message,
+.error-message {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  animation: slideIn 0.3s ease;
+  z-index: 1000;
+}
+
+.success-message {
+  background: #27ae60;
+  color: white;
+}
+
+.error-message {
+  background: #c0392b;
+  color: white;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
