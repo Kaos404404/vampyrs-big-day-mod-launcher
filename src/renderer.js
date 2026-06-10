@@ -1,5 +1,45 @@
 let currentGamePath = null;
 
+async function initializeApp() {
+  // Try to load game path from config
+  const gamePath = await window.electron.getGamePath();
+  if (gamePath) {
+    currentGamePath = gamePath;
+    document.getElementById('gamePathDisplay').textContent = gamePath;
+    updateStatusIndicator(true);
+  } else {
+    // Try to auto-detect the game
+    await autoDetectGame();
+  }
+  
+  await loadMods();
+}
+
+async function autoDetectGame() {
+  const result = await window.electron.autoDetectGame();
+  if (result.success) {
+    currentGamePath = result.path;
+    document.getElementById('gamePathDisplay').textContent = result.path;
+    updateStatusIndicator(true);
+    showMessage(`Spiel gefunden: ${result.path}`, 'success');
+  } else {
+    updateStatusIndicator(false);
+  }
+}
+
+function updateStatusIndicator(isOnline) {
+  const indicator = document.getElementById('statusIndicator');
+  if (isOnline) {
+    indicator.classList.remove('offline');
+    indicator.classList.add('online');
+    indicator.textContent = '● Online';
+  } else {
+    indicator.classList.remove('online');
+    indicator.classList.add('offline');
+    indicator.textContent = '● Offline';
+  }
+}
+
 async function loadMods() {
   const mods = await window.electron.getMods();
   const modList = document.getElementById('modList');
@@ -77,6 +117,7 @@ async function setGamePath() {
     if (result.success) {
       currentGamePath = gamePath;
       document.getElementById('gamePathDisplay').textContent = gamePath;
+      updateStatusIndicator(true);
       showMessage('Spielpfad gespeichert', 'success');
     } else {
       showMessage(`Fehler: ${result.error}`, 'error');
@@ -134,9 +175,10 @@ function showMessage(text, type) {
 }
 
 // Event Listeners
+document.getElementById('autoDetectBtn').addEventListener('click', autoDetectGame);
 document.getElementById('setGamePathBtn').addEventListener('click', setGamePath);
 document.getElementById('installModBtn').addEventListener('click', installMod);
 document.getElementById('launchGameBtn').addEventListener('click', launchGame);
 
-// Initial load
-loadMods();
+// Initialize on startup
+initializeApp();

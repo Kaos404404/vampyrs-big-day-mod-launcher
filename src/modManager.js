@@ -41,6 +41,80 @@ class ModManager {
     return this.config.mods || [];
   }
 
+  getGamePath() {
+    return this.config.gamePath;
+  }
+
+  // Auto-detect game path from common Steam locations
+  async autoDetectGamePath() {
+    const commonPaths = [
+      path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'steamapps', 'common', 'Vampys Big Day'),
+      path.join(os.homedir(), 'AppData', 'Local', 'Programs', 'steamapps', 'common', "Vampy's Big Day"),
+      'C:\\Program Files (x86)\\Steam\\steamapps\\common\\Vampys Big Day',
+      'C:\\ Program Files\\Steam\\steamapps\\common\\Vampys Big Day',
+      path.join(os.homedir(), 'Games', "Vampy's Big Day"),
+      path.join(os.homedir(), 'Games', 'Vampys Big Day'),
+    ];
+
+    // Check common Steam registry locations (Windows)
+    try {
+      const steamPaths = this.getSteamGamePath();
+      if (steamPaths && steamPaths.length > 0) {
+        for (const steamPath of steamPaths) {
+          if (this.validateGamePath(steamPath)) {
+            return steamPath;
+          }
+        }
+      }
+    } catch (error) {
+      console.log('Could not read Steam registry');
+    }
+
+    // Check common paths
+    for (const commonPath of commonPaths) {
+      if (fs.existsSync(commonPath) && this.validateGamePath(commonPath)) {
+        return commonPath;
+      }
+    }
+
+    return null;
+  }
+
+  // Validate game path by checking for required files
+  validateGamePath(gamePath) {
+    if (!fs.existsSync(gamePath)) return false;
+    
+    // Check for either index.html or exe
+    const hasIndexHtml = fs.existsSync(path.join(gamePath, 'index.html'));
+    const hasExe = fs.existsSync(path.join(gamePath, 'Vampys Big Day.exe')) ||
+                   fs.existsSync(path.join(gamePath, "Vampy's Big Day.exe"));
+    
+    return hasIndexHtml || hasExe;
+  }
+
+  // Get Steam game path from registry (Windows only)
+  getSteamGamePath() {
+    try {
+      const registry = require('registry-js');
+      const steamInstall = registry.getRegistryValue(
+        'HKEY_LOCAL_MACHINE',
+        'SOFTWARE\\Valve\\Steam',
+        'InstallPath'
+      );
+
+      if (steamInstall) {
+        const steamappsPath = path.join(steamInstall, 'steamapps', 'common');
+        return [
+          path.join(steamappsPath, 'Vampys Big Day'),
+          path.join(steamappsPath, "Vampy's Big Day"),
+        ];
+      }
+    } catch (error) {
+      // Registry access failed, continue with common paths
+    }
+    return [];
+  }
+
   async installMod(modPath) {
     try {
       const modId = uuidv4();
@@ -132,13 +206,16 @@ class ModManager {
     fs.writeFileSync(manifestPath, JSON.stringify(modManifest, null, 2));
 
     // Launch the game - try different methods
-    const indexPath = path.join(this.config.gamePath, 'index.html');
     const exePath = path.join(this.config.gamePath, 'Vampys Big Day.exe');
+    const exePath2 = path.join(this.config.gamePath, "Vampy's Big Day.exe");
+    const indexPath = path.join(this.config.gamePath, 'index.html');
     
     // Try to launch the executable first, fall back to index.html
     let gameProcess;
     if (fs.existsSync(exePath)) {
       gameProcess = spawn(exePath, [], { detached: true });
+    } else if (fs.existsSync(exePath2)) {
+      gameProcess = spawn(exePath2, [], { detached: true });
     } else if (fs.existsSync(indexPath)) {
       gameProcess = spawn('start', [indexPath], { shell: true, detached: true });
     } else {

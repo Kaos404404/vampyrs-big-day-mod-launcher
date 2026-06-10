@@ -1,21 +1,63 @@
 {
   "name": "vampyrs-big-day-mod-launcher",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Mod Launcher for Vampy's Big Day (Construct 3 Game)",
   "main": "main.js",
   "homepage": "./",
+  "author": "Kaos404404",
+  "build": {
+    "appId": "com.vampysbigday.modlauncher",
+    "productName": "Vampy's Big Day Mod Launcher",
+    "directories": {
+      "buildResources": "assets"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "src/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Vampy's Big Day Mod Launcher"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-portable.${ext}"
+    }
+  },
   "scripts": {
     "start": "electron .",
     "dev": "electron . --dev",
     "build": "electron-builder",
-    "build:win": "electron-builder --win",
-    "build:mac": "electron-builder --mac",
-    "build:linux": "electron-builder --linux"
+    "build:win": "electron-builder --win --publish never",
+    "build:portable": "electron-builder --win portable --publish never",
+    "build:dir": "electron-builder --dir"
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.1.2",
     "extract-zip": "^2.0.1",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "registry-js": "^0.3.4"
   },
   "devDependencies": {
     "electron": "^latest",

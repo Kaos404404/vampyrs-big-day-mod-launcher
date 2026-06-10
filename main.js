@@ -10,11 +10,14 @@ const createWindow = () => {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    minWidth: 800,
+    minHeight: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,
       contextIsolation: true,
     },
+    icon: path.join(__dirname, 'assets', 'icon.ico'),
   });
 
   mainWindow.loadFile('src/index.html');
@@ -45,6 +48,24 @@ app.on('activate', () => {
 // IPC Handlers
 ipcMain.handle('get-mods', async () => {
   return modManager.getMods();
+});
+
+ipcMain.handle('get-game-path', async () => {
+  return modManager.getGamePath();
+});
+
+ipcMain.handle('auto-detect-game', async () => {
+  try {
+    const detectedPath = await modManager.autoDetectGamePath();
+    if (detectedPath) {
+      modManager.setGamePath(detectedPath);
+      return { success: true, path: detectedPath };
+    } else {
+      return { success: false, error: 'Spiel nicht gefunden' };
+    }
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
 });
 
 ipcMain.handle('install-mod', async (event, modPath) => {
